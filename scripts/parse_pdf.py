@@ -7,7 +7,32 @@ Validates and processes requirements.json from PDF source.
 import json
 import os
 from typing import Dict, List, Any
+import pdfplumber
 
+def extract_rules_from_pdf(pdf_path: str) -> List[Dict[str, Any]]:
+    """Extract rules from a PDF file. Placeholder implementation."""
+    """Attempt to parse rules directly from the Hebrew PDF."""
+    rules = []
+    with pdfplumber.open(pdf_path) as pdf:
+        for page_number, page in enumerate(pdf.pages, start=1):
+            text = page.extract_text()
+            if not text:
+                continue
+
+            # Example: naive filtering for "סעיף" or "דרישות"
+            for line in text.splitlines():
+                if "דרישות" in line or "סעיף" in line:
+                    rules.append({
+                        "id": f"PDF-{page_number}-{len(rules)+1}",
+                        "title": line.strip()[:60],
+                        "desc_he": line.strip(),
+                        "desc_en": "TODO: manual translation",
+                        "authority": "TODO",
+                        "priority": "medium",
+                        "source_ref": f"PDF p.{page_number}",
+                        "triggers": {}
+                    })
+    return rules
 def validate_rule_schema(rule: Dict[str, Any]) -> bool:
     """Validate a single rule against required schema."""
     required_fields = ["id", "title", "desc_he", "desc_en", "authority", "priority", "source_ref", "triggers"]

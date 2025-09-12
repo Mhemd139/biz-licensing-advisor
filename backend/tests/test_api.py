@@ -48,8 +48,8 @@ def test_assess_steakhouse():
         "seats": 80,
         "serves_alcohol": True,
         "uses_gas": True,
-        "delivery": False,
-        "has_misting": False
+        "has_misting": False,
+        "offers_delivery": False
     }
     
     response = client.post("/assess", json=profile)
@@ -74,8 +74,8 @@ def test_assess_cafe_exempt():
         "seats": 100,
         "serves_alcohol": False,
         "uses_gas": False,
-        "delivery": False,
-        "has_misting": False
+        "has_misting": False,
+        "offers_delivery": False
     }
     
     response = client.post("/assess", json=profile)
@@ -98,8 +98,8 @@ def test_assess_ghost_kitchen():
         "seats": 0,
         "serves_alcohol": False,
         "uses_gas": False,
-        "delivery": True,
-        "has_misting": False
+        "has_misting": False,
+        "offers_delivery": True
     }
     
     response = client.post("/assess", json=profile)
@@ -134,8 +134,8 @@ def test_assess_large_hall():
         "seats": 350,
         "serves_alcohol": False,
         "uses_gas": True,
-        "delivery": False,
-        "has_misting": False
+        "has_misting": False,
+        "offers_delivery": False
     }
     
     response = client.post("/assess", json=profile)

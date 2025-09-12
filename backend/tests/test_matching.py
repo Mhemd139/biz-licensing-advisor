@@ -32,8 +32,8 @@ def test_cafe_exempt():
         "seats": 100,
         "serves_alcohol": False,
         "uses_gas": False,
-        "delivery": False,
-        "has_misting": False
+        "has_misting": False,
+        "offers_delivery": False
     }
     
     matches = match_rules(profile, rules)
@@ -57,8 +57,8 @@ def test_steakhouse():
         "seats": 80,
         "serves_alcohol": True,
         "uses_gas": True,
-        "delivery": False,
-        "has_misting": False
+        "has_misting": False,
+        "offers_delivery": False
     }
     
     matches = match_rules(profile, rules)
@@ -71,6 +71,9 @@ def test_steakhouse():
     # Should include MoH rules
     assert "R-MoH-Food-Temps" in ids
     assert "R-MoH-Sewage-Fat-Separator" in ids
+    # Should include Fire rules (uses_gas=True)
+    assert "R-Fire-Gas-Compliance" in ids
+    assert "R-Fire-Gas-Shutoff" in ids
 
 
 def test_ghost_kitchen():
@@ -81,8 +84,8 @@ def test_ghost_kitchen():
         "seats": 0,
         "serves_alcohol": False,
         "uses_gas": False,
-        "delivery": True,
-        "has_misting": False
+        "has_misting": False,
+        "offers_delivery": True
     }
     
     matches = match_rules(profile, rules)
@@ -95,6 +98,9 @@ def test_ghost_kitchen():
     # Should NOT include MoH rules requiring seats ≥ 1
     assert "R-MoH-Food-Temps" not in ids
     # Ghost kitchen with 0 seats has minimal requirements
+    # Should include delivery rules (offers_delivery=True)
+    assert "R-MoH-Delivery-Temperature-Control" in ids
+    assert "R-MoH-Delivery-Containers" in ids
 
 
 def test_large_hall():
@@ -105,8 +111,8 @@ def test_large_hall():
         "seats": 350,
         "serves_alcohol": False,
         "uses_gas": True,
-        "delivery": False,
-        "has_misting": False
+        "has_misting": False,
+        "offers_delivery": False
     }
     
     matches = match_rules(profile, rules)
@@ -118,6 +124,8 @@ def test_large_hall():
     assert "R-Police-Exterior-Lighting" in ids
     # Should include MoH rules
     assert "R-MoH-Food-Temps" in ids
+    # Should include Fire rules (uses_gas=True) 
+    assert "R-Fire-Gas-Compliance" in ids
 
 
 def test_edge_thresholds():
@@ -128,8 +136,8 @@ def test_edge_thresholds():
         "seats": 200,
         "serves_alcohol": False,
         "uses_gas": False,
-        "delivery": False,
-        "has_misting": True
+        "has_misting": True,
+        "offers_delivery": False
     }
     
     matches = match_rules(profile, rules)

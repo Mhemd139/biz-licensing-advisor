@@ -6,11 +6,8 @@
     "desc_en": "If ≤200 seats and no alcohol is sold/served/consumed, Police chapter does not apply.",
     "authority": "Israel Police",
     "priority": "high",
-    "source_ref": "4.2א, סעיף 3.2.2/3.8.1",
-    "triggers": {
-      "seats": { "max": 200 },
-      "flags": { "serves_alcohol": false }
-    }
+    "source_ref": "§3.2.2 ",
+    "triggers": { "seats": { "max": 200 }, "flags": { "serves_alcohol": false } }
   },
   {
     "id": "R-Police-CCTV-Resolution",
@@ -19,7 +16,7 @@
     "desc_en": "CCTV at ≥1.3MP with ≥30-min backup for recorder and camera power.",
     "authority": "Israel Police",
     "priority": "high",
-    "source_ref": "4.2א, 3.3.1(1,3)",
+    "source_ref": "§3.3.1(1,3)",
     "triggers": { "flags": { "serves_alcohol": true } }
   },
   {
@@ -29,7 +26,7 @@
     "desc_en": "Place cameras at entrance (inward) and on facade covering up to 10m outward.",
     "authority": "Israel Police",
     "priority": "medium",
-    "source_ref": "4.2א, 3.3.2(1–2)",
+    "source_ref": "§3.3.2(1–2)",
     "triggers": { "flags": { "serves_alcohol": true } }
   },
   {
@@ -39,7 +36,7 @@
     "desc_en": "Record at ≥25 FPS; keep footage for ≥14 days.",
     "authority": "Israel Police",
     "priority": "high",
-    "source_ref": "4.2א, 3.3.3(3), 3.3.4(1)",
+    "source_ref": "§3.3.3(3), §3.3.4(1–2)",
     "triggers": { "flags": { "serves_alcohol": true } }
   },
   {
@@ -49,7 +46,7 @@
     "desc_en": "Entrance sign: alcohol may not be sold/served to under-18.",
     "authority": "Israel Police",
     "priority": "high",
-    "source_ref": "4.2א, 3.6.1",
+    "source_ref": "§3.6.1",
     "triggers": { "flags": { "serves_alcohol": true } }
   },
   {
@@ -59,9 +56,42 @@
     "desc_en": "Provide exterior lighting at night for access paths and exits.",
     "authority": "Israel Police",
     "priority": "medium",
-    "source_ref": "4.2א, 3.4",
+    "source_ref": "§3.4",
     "triggers": { "seats": { "min": 1 } }
   },
+
+  {
+    "id": "R-Fire-Gas-Compliance",
+    "title": "Gas system must comply with SI 158",
+    "desc_he": "מערכת הגז המשמשת את העסק תענה לנדרש בתקן ישראלי ת\"י 158.",
+    "desc_en": "The gas system serving the business must comply with Israeli Standard SI 158.",
+    "authority": "Fire & Rescue Authority",
+    "priority": "high",
+    "source_ref": "§6.23.1",
+    "triggers": { "flags": { "uses_gas": true } }
+  },
+  {
+    "id": "R-Fire-Gas-Shutoff",
+    "title": "Automatic gas-leak shutoff + energy cut-off",
+    "desc_he": "על כל המכשירים והאביזרים לצריכת גז יותקנו התקנים להפסקת זרימת גז במקרה של דליפה, כולל ניתוק מקורות אנרגיה.",
+    "desc_en": "All gas-consuming devices must have automatic shutoff devices in case of a leak, including energy source cut-off.",
+    "authority": "Fire & Rescue Authority",
+    "priority": "high",
+    "source_ref": "§6.23.2",
+    "triggers": { "flags": { "uses_gas": true } }
+  },
+
+  {
+    "id": "R-Fire-Hood-Suppression",
+    "title": "If hoods exist: hood fire-suppression per SI 5356-2",
+    "desc_he": "אם קיימים מנדפים – מערכת כיבוי במנדפים לפי ת\"י 5356 חלק 2; אישור מתאים בכתב.",
+    "desc_en": "Where hoods exist, install hood fire-suppression per SI 5356-2; maintain written approval.",
+    "authority": "Fire & Rescue Authority",
+    "priority": "medium",
+    "source_ref": "§6.23.4",
+    "triggers": { "flags": { "uses_gas": true } }
+  },
+
   {
     "id": "R-MoH-Drinkable-Water-Backflow",
     "title": "Potable water + backflow prevention",
@@ -69,7 +99,7 @@
     "desc_en": "Supply drinking water only from approved systems; install backflow preventer where separation isn't possible.",
     "authority": "Ministry of Health",
     "priority": "high",
-    "source_ref": "4.2א, 4.6.1–4.6.9",
+    "source_ref": "§4.6.1–4.6.9",
     "triggers": { "seats": { "min": 1 } }
   },
   {
@@ -79,7 +109,7 @@
     "desc_en": "If the business has misting/fountains/cooling towers, perform Legionella testing.",
     "authority": "Ministry of Health",
     "priority": "high",
-    "source_ref": "4.2א, 4.6.6",
+    "source_ref": "§4.6.6",
     "triggers": { "flags": { "has_misting": true } }
   },
   {
@@ -89,7 +119,7 @@
     "desc_en": "Discharge via approved sewage system; install a grease trap per MoH guidance.",
     "authority": "Ministry of Health",
     "priority": "high",
-    "source_ref": "4.2א, 4.7.1–4.7.6",
+    "source_ref": "§4.7.1–4.7.6",
     "triggers": { "seats": { "min": 1 } }
   },
   {
@@ -99,7 +129,7 @@
     "desc_en": "Provide soap/towels/bins, clear wayfinding signs, and continuous cleaning.",
     "authority": "Ministry of Health",
     "priority": "medium",
-    "source_ref": "4.2א, 4.9",
+    "source_ref": "§4.9",
     "triggers": { "seats": { "min": 1 } }
   },
   {
@@ -109,7 +139,7 @@
     "desc_en": "Display no-smoking signs and enforce compliance.",
     "authority": "Ministry of Health",
     "priority": "medium",
-    "source_ref": "4.2א, 4.5",
+    "source_ref": "§4.5",
     "triggers": { "seats": { "min": 1 } }
   },
   {
@@ -119,7 +149,28 @@
     "desc_en": "Hold hot ≥65°C; chilled ≤5°C; frozen ≤-18°C; rapid cooling as specified.",
     "authority": "Ministry of Health",
     "priority": "high",
-    "source_ref": "4.2א, נספח/סעיפי טמפרטורה בפרק 2–3",
+    "source_ref": "§4.2.1–4.2.3",
     "triggers": { "seats": { "min": 1 } }
+  },
+  {
+    "id": "R-MoH-Delivery-Temperature-Control",
+    "title": "Deliveries must keep safe temperatures & follow MoH guidance",
+    "desc_he": "בחלוקת מזון יש לשמור על טמפרטורות בטוחות: חם ≥65°C, קר ≤5°C, באמצעות מכלים שומרי חום/קור; שליחת מזון תתבצע לפי הנחיות משרד הבריאות (נספח ב').",
+    "desc_en": "During distribution, keep hot food ≥65°C and cold food ≤5°C using insulated containers/cold counters; conduct deliveries per Ministry of Health guidance (Annex B).",
+    "authority": "Ministry of Health",
+    "priority": "high",
+    "source_ref": "§3.9.1–§3.9.2; §4.3.4 (+ Annex B)",
+    "triggers": { "flags": { "offers_delivery": true } }
+  },
+  {
+    "id": "R-MoH-Delivery-Containers",
+    "title": "Use insulated containers/cold counters for delivery",
+    "desc_he": "בזמן חלוקת מזון, יש להשתמש במכלים שומרי חום/קור או בדלפקים מקוררים לשמירת טמפרטורה ובטיחות.",
+    "desc_en": "During distribution, use insulated containers or cold counters to maintain safe temperatures and prevent contamination.",
+    "authority": "Ministry of Health",
+    "priority": "medium",
+    "source_ref": "§3.9.1–§3.9.3",
+    "triggers": { "flags": { "offers_delivery": true } }
   }
+  
 ]

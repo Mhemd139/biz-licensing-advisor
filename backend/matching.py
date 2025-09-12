@@ -109,8 +109,8 @@ if __name__ == "__main__":
         "seats": 80,
         "serves_alcohol": True,
         "uses_gas": True,
-        "delivery": False,
-        "has_misting": False
+        "has_misting": False,
+        "offers_delivery": False
     }
     
     # Match rules

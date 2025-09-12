@@ -25,8 +25,8 @@ class BusinessProfile(BaseModel):
     seats: int
     serves_alcohol: bool
     uses_gas: bool
-    delivery: bool
     has_misting: bool
+    offers_delivery: bool
 
 
 def load_rules():
