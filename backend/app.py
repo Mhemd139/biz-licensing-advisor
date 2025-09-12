@@ -1,10 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import json
 import os
 import uvicorn
+import logging
 from matching import match_rules
+from llm import call_llm, validate_report_references
 
 app = FastAPI()
 
@@ -59,10 +61,27 @@ def assess_business(profile: BusinessProfile):
         matches = match_rules(profile_dict, rules)
         match_ids = [rule["id"] for rule in matches]
         
-        return {
-            "matches": match_ids,
-            "report": None
-        }
+        # Generate LLM report
+        try:
+            report = call_llm(profile_dict, matches)
+            
+            # Validate that report only references provided rule IDs
+            if not validate_report_references(report, match_ids):
+                raise ValueError("Report contains invalid rule references")
+            
+            return {
+                "matches": match_ids,
+                "report": report.model_dump()
+            }
+            
+        except Exception as llm_error:
+            logging.error(f"LLM report generation failed: {str(llm_error)}")
+            return {
+                "matches": match_ids,
+                "report": None,
+                "error": f"Report generation failed: {str(llm_error)}"
+            }
+        
     except Exception as e:
         return {"error": str(e), "matches": [], "report": None}
 
