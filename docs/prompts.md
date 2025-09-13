@@ -164,3 +164,49 @@ do those changes please then ,   - Use gpt-3.5-turbo instead of gpt-4 for 5-10x 
   - Reduce max_tokens to 1000 if the reports don't need to be that long
   and dont forget putting my prompts in the file prompts.md
 ```
+
+### Prompt : Documentation Reorganization
+```
+i will be moving prompts.md into docs f, we also have dev-logs so u can make the necessary
+  changes , also ive seen it its too complex , simplify it and make it shorter , also dont forget to
+  keep inputting my prompts into the file prompts.md , however for folder ai/ make a new file called
+  tools.md , which contains claude code for coding and debugging , chatgpt for system planning and mvp
+   and replit for the mock web app reference since I already have a mock web app via replit cause I
+  needed to see how would the webapp look like and what would my produce actually act like for the
+  perfect user experience
+
+  also dont forget to add the fact that we used gpt3.5 turbo + max tokens is 1000
+```
+
+### Prompt : Task Analysis and M3 Gap Filling
+```
+ALWAYS REMEMBER TO ADD MY PROMPTS INTO PROMPTS.MD FILE like the previous prompt
+
+now start filling the gaps we needed to fill in milestone M3 before we continue over to m4
+```
+
+### Prompt : Start M4 Frontend
+```
+lets start m4?
+```
+
+### Prompt : Check Documentation Requirements
+```
+for now look please into the task.md file and tell me if there is a part of the documentation that we might have missed
+especially the part about the matching algorithm
+```
+
+### Prompt : Create Missing Documentation
+```
+yes please
+```
+
+### Prompt : M4 Frontend Implementation
+```
+okay for the m4 frontend , I have made a file named frontendui.md , make it and make sure to read it well , its a prompt for execution on how would the ui look , however dont be too attached to it , make the necessary changes to make things work
+```
+
+### Prompt : LLM Accuracy Improvement Request
+```
+yes please
+```

@@ -58,12 +58,19 @@ Business Licensing Advisor - A system to help Israeli business owners understand
 - Set up React frontend with basic health check fetch
 - **Status**: Backend runs on port 8000, frontend on 5173
 
-### M1 - Data Processing (ETL) ✅  
+### M1 - Data Processing (ETL) ✅
 **Completed**: September 12, 2025
 - **Manual Curation**: Processed Hebrew regulatory PDF into structured JSON
 - **Data Validation**: Created `scripts/parse_pdf.py` with schema validation
-- **Output**: `data/requirements.json` with 12 curated rules
+- **Output**: `data/requirements.json` with 17 curated rules
 - **Source References**: All rules include PDF page/section citations
+
+**Inclusions/Exclusions**:
+- **Included**: 17 core licensing rules from Hebrew regulatory PDF
+  - 7 Israel Police rules (CCTV, alcohol signage, lighting, exemptions)
+  - 10 Ministry of Health rules (water, hygiene, temperatures, facilities, gas safety, delivery)
+- **Excluded**: Complex environmental regulations, fire safety details, building permits
+- **Focus**: Restaurant-specific operational requirements with clear business triggers
 
 ### M2 - Matching Engine ✅
 **Completed**: September 12, 2025
@@ -123,19 +130,20 @@ Business Licensing Advisor - A system to help Israeli business owners understand
 - Report sections display
 - PDF export functionality
 
-## AI Tools Usage
-**Development Assistant**: Claude Code (Anthropic)
-- Code generation and architecture decisions
-- Test case development
-- Documentation writing
-- Problem-solving and debugging
+### M3 - LLM Report Generation ✅
+**Completed**: September 13, 2025
+- **LLM Integration**: OpenAI GPT-3.5-turbo with 1000 max tokens
+- **Report Generation**: Structured reports with validation
+- **Performance Optimization**: Switched from GPT-4 for 5-10x speed improvement
+- **Error Handling**: Proper fallbacks and validation
+- **Testing**: Complete test suite with real API integration
 
-**Manual Work**:
-- Hebrew PDF content analysis and translation
-- Business logic rule definition
-- Domain expertise for regulatory interpretation
+## AI Tools Usage
+- **Claude Code**: Coding, debugging, architecture, testing
+- **ChatGPT**: System planning, MVP design
+- **Replit**: Mock web app reference for UX validation
 
 ---
 
-*Last Updated*: September 12, 2025  
-*Next Milestone*: M3 - LLM Integration
+*Last Updated*: September 13, 2025
+*Next Milestone*: M4 - Frontend Implementation

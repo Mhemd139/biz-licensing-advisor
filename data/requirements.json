@@ -13,7 +13,7 @@
     "id": "R-Police-CCTV-Resolution",
     "title": "CCTV ≥1.3MP + backup",
     "desc_he": "טמ\"ס ברזולוציה 1.3MP לפחות, גיבוי חצי שעה להקלטה ולספקי כוח.",
-    "desc_en": "CCTV at ≥1.3MP with ≥30-min backup for recorder and camera power.",
+    "desc_en": "Install CCTV system with minimum 1.3MP resolution and ≥30-minute backup power for recorder and camera power supply.",
     "authority": "Israel Police",
     "priority": "high",
     "source_ref": "§3.3.1(1,3)",
@@ -31,12 +31,22 @@
   },
   {
     "id": "R-Police-CCTV-FPS-Retention",
-    "title": "FPS ≥25 and retain 14 days",
+    "title": "CCTV recording speed ≥25 FPS and retain footage ≥14 days",
     "desc_he": "מהירות צילום לא פחות מ-25FPS; שמירת הקלטות 14 ימים.",
-    "desc_en": "Record at ≥25 FPS; keep footage for ≥14 days.",
+    "desc_en": "Record at minimum 25 frames per second (FPS) and retain footage for at least 14 days.",
     "authority": "Israel Police",
     "priority": "high",
     "source_ref": "§3.3.3(3), §3.3.4(1–2)",
+    "triggers": { "flags": { "serves_alcohol": true } }
+  },
+  {
+    "id": "R-Police-CCTV-Signage",
+    "title": "CCTV area surveillance signage",
+    "desc_he": "שילוט המעיד על צילום באזור - שלטים בכניסה ובאזורי המצלמות החיצוניות.",
+    "desc_en": "Post signs at entrance and near exterior camera zones stating the area is under video surveillance.",
+    "authority": "Israel Police",
+    "priority": "medium",
+    "source_ref": "§3.3.5",
     "triggers": { "flags": { "serves_alcohol": true } }
   },
   {
