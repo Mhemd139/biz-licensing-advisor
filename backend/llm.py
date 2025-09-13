@@ -8,6 +8,10 @@ import os
 from typing import Dict, List, Any, Optional
 from pydantic import BaseModel, Field, ValidationError
 import logging
+from dotenv import load_dotenv
+
+# Load environment variables from .env file in parent directory
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -62,8 +66,7 @@ def call_llm(profile: Dict[str, Any], matched_rules: List[Dict[str, Any]]) -> Re
         # Get LLM API key
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
-            logger.warning("No OPENAI_API_KEY found, falling back to mock mode")
-            return _generate_mock_report(profile, matched_rules)
+            raise RuntimeError("OPENAI_API_KEY is required but not found in environment")
         
         # Generate report using actual LLM
         return _generate_llm_report(profile, matched_rules, api_key)
@@ -176,8 +179,7 @@ def _generate_llm_report(profile: Dict[str, Any], matched_rules: List[Dict[str, 
     try:
         import openai
     except ImportError:
-        logger.warning("OpenAI library not installed, falling back to mock mode")
-        return _generate_mock_report(profile, matched_rules)
+        raise RuntimeError("OpenAI library not installed. Run: pip install openai")
     
     # Configure OpenAI
     openai.api_key = api_key
@@ -188,19 +190,19 @@ def _generate_llm_report(profile: Dict[str, Any], matched_rules: List[Dict[str, 
     try:
         # Call OpenAI API
         response = openai.chat.completions.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=[
                 {
                     "role": "system",
                     "content": "You are an expert Israeli business licensing consultant. Generate structured reports in both Hebrew and English."
                 },
                 {
-                    "role": "user", 
+                    "role": "user",
                     "content": prompt
                 }
             ],
             temperature=0.3,
-            max_tokens=2000
+            max_tokens=1000
         )
         
         # Parse and validate response
@@ -209,8 +211,7 @@ def _generate_llm_report(profile: Dict[str, Any], matched_rules: List[Dict[str, 
         
     except Exception as e:
         logger.error(f"LLM API error: {str(e)}")
-        logger.info("Falling back to mock mode due to LLM error")
-        return _generate_mock_report(profile, matched_rules)
+        raise RuntimeError(f"LLM API integration failed: {str(e)}")
 
 
 def _create_llm_prompt(profile: Dict[str, Any], matched_rules: List[Dict[str, Any]]) -> str:
@@ -237,21 +238,216 @@ MATCHED RULES ({len(matched_rules)} total):
 {rule_details}
 
 REQUIREMENTS:
-1. Create a summary in Hebrew and English
-2. Group rules by authority into sections
-3. Provide actionable recommendations
-4. Reference only the provided rule IDs
-5. Focus on practical implementation steps
+1. Start with a brief summary paragraph
+2. Create sections for each authority with specific requirements
+3. End with actionable recommendations
 
-Format the response as structured text that can be parsed into JSON sections."""
+FORMAT YOUR RESPONSE AS:
+
+## Summary
+[Brief overview of licensing requirements]
+
+## Israel Police Requirements  
+[List specific police requirements if any]
+
+## Ministry of Health Requirements
+[List specific health requirements if any]
+
+## Fire & Rescue Authority Requirements
+[List specific fire requirements if any]
+
+## Recommendations
+- [Actionable recommendation 1]
+- [Actionable recommendation 2]
+- [Actionable recommendation 3]
+
+Use clear headers and bullet points. Include both Hebrew and English where relevant."""
 
 
 def _parse_llm_response(llm_output: str, matched_rules: List[Dict[str, Any]]) -> ReportJSON:
     """Parse LLM response into structured format."""
-    # For now, fall back to mock mode if parsing is complex
-    # This can be enhanced with better parsing logic
-    logger.info("Parsing LLM response - using structured mock format")
-    return _generate_mock_report({}, matched_rules)
+    logger.info("Parsing actual LLM response")
+    
+    try:
+        # Extract basic information from matched rules
+        rule_ids = [rule["id"] for rule in matched_rules]
+        authorities = list(set(rule["authority"] for rule in matched_rules))
+        high_priority_count = sum(1 for rule in matched_rules if rule["priority"] == "high")
+        
+        # Try to extract structured content from LLM response
+        # Split response into sections
+        sections = []
+        
+        # Look for section headers or create basic sections by authority
+        authority_rules = {}
+        for rule in matched_rules:
+            auth = rule["authority"]
+            if auth not in authority_rules:
+                authority_rules[auth] = []
+            authority_rules[auth].append(rule)
+        
+        # Create sections from LLM content
+        for authority, rules in authority_rules.items():
+            auth_rule_ids = [rule["id"] for rule in rules]
+            priority = "high" if any(rule["priority"] == "high" for rule in rules) else "medium"
+            
+            # Extract relevant content for this authority from LLM output
+            section_content = _extract_authority_content(llm_output, authority, rules)
+            
+            sections.append(ReportSection(
+                title=f"{authority} Requirements",
+                content=section_content,
+                rule_ids=auth_rule_ids,
+                priority=priority
+            ))
+        
+        # Extract summary from LLM output (first paragraph or specific markers)
+        summary = _extract_summary(llm_output, len(matched_rules), high_priority_count, len(authorities))
+        
+        # Extract recommendations
+        recommendations = _extract_recommendations(llm_output)
+        
+        return ReportJSON(
+            summary=summary,
+            sections=sections,
+            total_rules=len(matched_rules),
+            high_priority_count=high_priority_count,
+            recommendations=recommendations,
+            authorities=authorities
+        )
+        
+    except Exception as e:
+        logger.error(f"Failed to parse LLM response: {str(e)}")
+        logger.debug(f"LLM output was: {llm_output[:500]}...")  # Log first 500 chars for debugging
+        raise RuntimeError(f"Failed to parse LLM response: {str(e)}")
+
+
+def _extract_authority_content(llm_output: str, authority: str, rules: List[Dict[str, Any]]) -> str:
+    """Extract content relevant to a specific authority from LLM output."""
+    lines = llm_output.split('\n')
+    
+    # Look for authority section header
+    authority_content = []
+    in_authority_section = False
+    
+    # Check for various authority name formats
+    authority_variations = [
+        authority,
+        authority.replace(" ", "").lower(),
+        authority.lower(),
+        authority.replace("&", "and").lower()
+    ]
+    
+    for line in lines:
+        line_clean = line.strip()
+        line_lower = line_clean.lower()
+        
+        # Check if this line starts a new authority section
+        if line_clean.startswith('##') and any(var in line_lower for var in authority_variations):
+            in_authority_section = True
+            authority_content.append(line_clean)
+            continue
+        
+        # If we hit another ## section, stop collecting
+        elif line_clean.startswith('##') and in_authority_section:
+            break
+        
+        # Collect content while in the authority section
+        elif in_authority_section and line_clean:
+            authority_content.append(line_clean)
+    
+    if authority_content:
+        content = '\n'.join(authority_content)
+    else:
+        # Fallback: create content from rule descriptions
+        content = f"Requirements from {authority}:\n\n"
+        for rule in rules:
+            content += f"• {rule['title']}\n"
+            content += f"  EN: {rule['desc_en']}\n"
+            if rule.get('desc_he'):
+                content += f"  HE: {rule['desc_he']}\n"
+            content += "\n"
+    
+    return content
+
+
+def _extract_summary(llm_output: str, total_rules: int, high_priority: int, authority_count: int) -> str:
+    """Extract summary from LLM output."""
+    lines = llm_output.split('\n')
+    
+    # Look for explicit summary section
+    summary_lines = []
+    in_summary = False
+    
+    for line in lines:
+        line_clean = line.strip()
+        
+        # Check for summary header
+        if line_clean.startswith('## Summary') or line_clean.lower().startswith('summary'):
+            in_summary = True
+            continue
+        
+        # Stop at next section
+        elif line_clean.startswith('##') and in_summary:
+            break
+        
+        # Collect summary content
+        elif in_summary and line_clean:
+            summary_lines.append(line_clean)
+    
+    # If no explicit summary found, take first meaningful paragraphs
+    if not summary_lines:
+        for line in lines[:15]:
+            line_clean = line.strip()
+            if line_clean and not line_clean.startswith('#') and len(line_clean) > 30:
+                summary_lines.append(line_clean)
+                if len(summary_lines) >= 2:
+                    break
+    
+    if summary_lines:
+        summary = ' '.join(summary_lines)
+    else:
+        # Fallback summary
+        summary = f"Business licensing assessment identified {total_rules} requirements from {authority_count} authorities, with {high_priority} high-priority items requiring immediate attention."
+    
+    return summary
+
+
+def _extract_recommendations(llm_output: str) -> List[str]:
+    """Extract recommendations from LLM output."""
+    lines = llm_output.split('\n')
+    recommendations = []
+    
+    # Look for recommendations section
+    in_recommendations = False
+    for line in lines:
+        line_clean = line.strip()
+        
+        # Check for recommendations header
+        if line_clean.startswith('## Recommendation') or 'recommendation' in line_clean.lower():
+            in_recommendations = True
+            continue
+        
+        # Stop at next section
+        elif line_clean.startswith('##') and in_recommendations:
+            break
+        
+        # Extract bullet point recommendations
+        elif in_recommendations and (line_clean.startswith('•') or line_clean.startswith('-') or line_clean.startswith('*')):
+            rec_text = line_clean.lstrip('•-* ').strip()
+            if rec_text:
+                recommendations.append(rec_text)
+    
+    if not recommendations:
+        # Default recommendations
+        recommendations = [
+            "Contact relevant authorities early in the planning process",
+            "Prioritize high-priority requirements first", 
+            "Ensure all documentation is prepared before submission",
+            "Consider professional licensing consultation for complex requirements"
+        ]
+    
+    return recommendations
 
 
 def validate_report_references(report: ReportJSON, valid_rule_ids: List[str]) -> bool:

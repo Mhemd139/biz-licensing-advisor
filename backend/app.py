@@ -5,8 +5,12 @@ import json
 import os
 import uvicorn
 import logging
+from dotenv import load_dotenv
 from matching import match_rules
 from llm import call_llm, validate_report_references
+
+# Load environment variables from parent directory
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 
 app = FastAPI()
 

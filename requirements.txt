@@ -4,3 +4,4 @@ pdfplumber
 pydantic
 openai
 pytest
+python-dotenv

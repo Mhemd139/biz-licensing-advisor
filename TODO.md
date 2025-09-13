@@ -31,13 +31,13 @@
 
 ---
 
-## M3 — LLM Report Generation (4h)
-- [ ] `/backend/llm.py`: `call_llm(profile, matched_rules) -> ReportJSON`
-- [ ] Add guardrails + schema validation
-- [ ] Implement mock mode (env flag)
-- [ ] Acceptance:
-  - [ ] Returns valid JSON referencing only provided `rule_ids`
-  - [ ] Mock mode works in CI
+## M3 — LLM Report Generation (4h) ✅
+- [x] `/backend/llm.py`: `call_llm(profile, matched_rules) -> ReportJSON`
+- [x] Add guardrails + schema validation
+- [x] Implement mock mode (env flag)
+- [x] Acceptance:
+  - [x] Returns valid JSON referencing only provided `rule_ids`
+  - [x] Mock mode works in CI
 
 ---
 
