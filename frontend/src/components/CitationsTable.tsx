@@ -8,9 +8,17 @@ interface CitationsTableProps {
 }
 
 export default function CitationsTable({ report, matches, requirementsIndex }: CitationsTableProps) {
+  // Debug logging
+  console.log('CitationsTable - matches:', matches);
+  console.log('CitationsTable - requirementsIndex keys:', Object.keys(requirementsIndex));
+  console.log('CitationsTable - has CCTV rule:', !!requirementsIndex['R-Police-CCTV-Signage']);
+
   // Create citations from matches and report sections
   const citations = matches.map(ruleId => {
     const rule = requirementsIndex[ruleId];
+    if (ruleId === 'R-Police-CCTV-Signage') {
+      console.log('CCTV Signage rule lookup:', rule);
+    }
     return {
       rule_id: ruleId,
       source_ref: rule?.source_ref || 'N/A'

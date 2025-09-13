@@ -38,12 +38,16 @@ function App() {
     const loadRequirements = async () => {
       try {
         const requirements = await getRequirements();
+        console.log('Loaded requirements count:', requirements.length);
         const index = requirements.reduce((acc, rule) => {
           acc[rule.id] = rule;
           return acc;
         }, {} as Record<string, Rule>);
+        console.log('Has CCTV Signage rule:', !!index['R-Police-CCTV-Signage']);
+        console.log('CCTV rule details:', index['R-Police-CCTV-Signage']);
         setState(prev => ({ ...prev, requirementsIndex: index }));
       } catch (error) {
+        console.log('Requirements API failed, using mock data');
         // Use mock data if API fails
         const index = mockRequirements.reduce((acc, rule) => {
           acc[rule.id] = rule;
@@ -74,6 +78,12 @@ function App() {
       }
 
       const result = await assess(profile);
+
+      // Debug logging
+      console.log('API Response:', result);
+      console.log('Matches count:', result.matches?.length);
+      console.log('Report total_rules:', result.report?.total_rules);
+      console.log('Report sections count:', result.report?.sections?.length);
 
       // If report is null, synthesize a basic one
       if (!result.report) {
@@ -181,7 +191,11 @@ function App() {
               matches={state.result.matches}
               requirementsIndex={state.requirementsIndex}
             />
-            <NextActions report={state.result.report} />
+            <NextActions
+              report={state.result.report}
+              matches={state.result.matches}
+              requirementsIndex={state.requirementsIndex}
+            />
             <CitationsTable
               report={state.result.report}
               matches={state.result.matches}

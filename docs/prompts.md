@@ -210,3 +210,97 @@ okay for the m4 frontend , I have made a file named frontendui.md , make it and 
 ```
 yes please
 ```
+
+### Prompt : Debug Missing CCTV Signage Rule
+```
+yes lets go on , save the future prompts of mine in the prompts.md
+```
+
+### Prompt : Analysis of Fixed Report Results
+```
+Issues / Weak Points
+
+CCTV Signage
+
+In your Legal References & Citations table, you list R-Police-CCTV-Signage as:
+
+Unknown Requirement — N/A
+
+But the spec explicitly requires signage at the entrance and near exterior cameras (§3.3.1(2)). Your JSON has the correct rule:
+
+{
+  "id": "R-Police-CCTV-Signage",
+  "title": "CCTV area surveillance signage",
+  "source_ref": "§3.3.5",
+  ...
+}
+
+You're losing the mapping when generating the report. Probably a bug in your rule lookup/rendering (string mismatch between source_ref and your parser).
+
+[Additional analysis about grouping, terminology, and actions provided...]
+
+the report was Assessment Summary 14 Total Requirements 8 High Priority 22 Est. Processing Days...
+```
+
+### Prompt : Authority Misattribution and Rule Grouping Issues
+```
+⚠️ Still Problematic
+
+Key Obligations Section is Merging Rules
+
+Example:
+
+Under Fire & Rescue, you wrote one block that includes gas compliance, shutoff, hood suppression, and exterior lighting (!).
+
+But Exterior Lighting belongs to Police, not Fire.
+
+This looks like your grouping logic is mixing obligations incorrectly.
+
+Same under Israel Police: you lump resolution, alcohol minors signage, placement, and lighting into one "CCTV" block.
+
+➝ This is misleading: users think "Exterior lighting" is Fire Authority when it's actually Police (§3.4).
+
+Medium Priority Rules Not Reflected in Key Obligations
+
+Your Key Obligations text is only summarizing some of them (and even merging them).
+
+Users will see the Citations table has 14 rules, but the Key Obligations only "explains" ~9 of them.
+
+Authority Misattribution
+
+As noted:
+
+Exterior lighting is listed under Fire in Key Obligations → incorrect.
+
+Toilets and no-smoking signage are in the MoH block, which is fine, but they are all lumped together with food and sewage — again reducing clarity.
+
+if u want go over docs/pdf file , and read the pdf file to get the actual hebrew written rules and citations to verify the veridicts and whatelse , also please record my promts in promots.md
+```
+
+### Prompt : Fix Key Obligations Presentation Layer
+```
+I have a webapp that generates licensing compliance reports. The rule engine itself is firing correctly (the right rules are matched), but the **presentation layer is wrong**.
+
+The issue is in the "Key Obligations" section specifically. Rules are being:
+- Collapsed into generic narrative blocks instead of being clearly itemized
+- Incorrectly grouped/attributed to wrong authorities (e.g. Police rules showing under Fire Authority)
+- Not reflecting accurate priority counts (High Priority count doesn't match what's displayed)
+
+Please fix this issue so that:
+- Each triggered rule is shown under the correct authority
+- Rules are not collapsed into generic narrative lumps; they should be itemized clearly
+- Priorities are accurately reflected
+- No rules get misattributed to the wrong authority
+
+Keep everything else unchanged (Assessment Summary, Next 7 Days Actions, Legal References table are working fine).
+```
+
+### Prompt : Add Rule ID Tags to Next Actions
+```
+In Next 7 Days, tag items with rule IDs (e.g., "(R-MoH-Food-Temps)") for traceability.
+```
+
+### Prompt : Request Commit Message
+```
+give me a commit message make it simple and clear
+```

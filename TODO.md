@@ -41,16 +41,16 @@
 
 ---
 
-## M4 — API Contract + End-to-End (3h)
+## M4 — API Contract + End-to-End (3h) ✅
 - [x] FastAPI endpoints:
   - [x] `POST /assess`
   - [x] `GET /requirements`
   - [x] `GET /health`
-- [ ] FE: Form fields + results page with sections (summary, obligations, actions, risks, citations)
-- [ ] Add "Export to PDF" button
-- [ ] Acceptance:
-  - [ ] Fill form → get report
-  - [ ] PDF export works
+- [x] FE: Form fields + results page with sections (summary, obligations, actions, risks, citations)
+- [x] Add "Export to PDF" button
+- [x] Acceptance:
+  - [x] Fill form → get report
+  - [x] PDF export works
 
 ---
 
