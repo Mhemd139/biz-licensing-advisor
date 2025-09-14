@@ -51,6 +51,30 @@ Business Licensing Advisor - A system to help Israeli business owners understand
 
 ## Development Milestones
 
+### Pre-Development: AI-Assisted Project Architecture
+**Date**: September 11-12, 2025
+**Tool Used**: ChatGPT GPT-5 (thinking mode)
+
+**Revolutionary Approach**: Instead of traditional manual planning, the entire project architecture was generated through AI-assisted strategic planning.
+
+**Process**:
+1. **Input**: Original Task.md requirements (Hebrew + English mixed technical specifications)
+2. **AI Translation**: GPT-5 processed and clarified complex multilingual requirements
+3. **Strategic Decomposition**: Requirements broken down into 5 actionable development milestones
+4. **Time Estimation**: Each milestone assigned realistic time estimates based on complexity
+5. **Dependency Mapping**: Logical development sequence established (data → matching → AI → frontend → deployment)
+6. **Tracking System**: TODO.md file generated as project management bridge for Claude Code
+
+**Output**: Complete development roadmap with:
+- M0: Repository & Skeleton (2-3h)
+- M1: Data Processing & ETL (3-4h)
+- M2: Matching Engine (3h)
+- M3: LLM Integration (4h)
+- M4: Frontend & API Integration (3h)
+- M5: Deployment & Documentation (4-6h)
+
+**Innovation**: This approach created seamless AI-to-AI handoff, with ChatGPT handling strategic planning and Claude Code executing tactical implementation, connected via the TODO.md project management file.
+
 ### M0 - Repository & Skeleton ✅
 **Completed**: September 12, 2025
 - Created repository structure with backend/frontend/docs/data/scripts folders

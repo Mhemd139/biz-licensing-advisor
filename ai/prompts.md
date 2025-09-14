@@ -319,3 +319,57 @@ okay lets start , any steps that requires launching backend or frontend , or eve
 ```
 yes please , make the necessary modifications and updates
 ```
+
+### Prompt : GitIgnore Fix for Frontend Lib
+```
+before that , I have a problem in our gitignore I have ./lib as one of the gitignore , however , the vercel needs the lib/api.ts , so its not included in my commits in github , however , I have a solution I just dont know if its gonna work or not
+# Ignore all lib folders
+lib/
+
+# But keep this one
+!frontend/src/lib/
+
+i the gitignore , then simply git add . and then please go over the commits and thats it?
+```
+
+### Prompt : Deployment Connection Issue
+```
+I deployed both of them , but the result is a mock , and not a real result , I think its not talking to the backend at all
+```
+
+### Prompt : Backend URL and API Errors
+```
+https://biz-licensing-advisor.onrender.com/
+however when I visit that exact link , it gives
+detail    "Not Found"
+
+but if I go to /docs
+FastAPI [shows working API docs]
+```
+
+### Prompt : Frontend Connection Errors
+```
+[Network logs showing 405 errors and connection issues]
+```
+
+### Prompt : Deployment Success Confirmation
+```
+I finished the deployment it works perfectly well now
+can u tell me what our next step would be?
+https://biz-licensing-advisor.vercel.app/
+now backend is
+https://biz-licensing-advisor.onrender.com
+
+what is the next step
+```
+
+### Prompt : M5 Completion Check
+```
+is the 5th milestone ready?
+```
+
+### Prompt : Final Task Review
+```
+can u look over the file of task.md , and tell me if its all complete
+also please add every prompt of mine into prompts.md
+```

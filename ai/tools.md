@@ -90,10 +90,27 @@ This project demonstrates AI-first development methodology using multiple specia
 ## Development Methodology
 
 ### AI-First Approach
-1. **Planning Phase**: ChatGPT for architecture decisions
+1. **Requirements Analysis Phase**: ChatGPT GPT-5 (thinking mode) for architecture planning
+   - Task.md requirements translated to English
+   - Complex technical specifications broken into actionable milestones
+   - Strategic milestone prioritization (M0→M5)
+   - TODO.md file generation for development tracking
 2. **Implementation Phase**: Claude Code for development
 3. **Validation Phase**: Replit for UX testing
 4. **Production Phase**: OpenAI API for intelligent features
+
+### Detailed AI Workflow
+
+#### Project Architecture with ChatGPT GPT-5
+**Input**: Original Task.md requirements (Hebrew + English mixed)
+**Process**:
+- Translation and clarification of technical requirements
+- Strategic breakdown into 5 development milestones (M0-M5)
+- Time estimation and dependency mapping
+- Creation of TODO.md tracking file for Claude Code integration
+**Output**: Structured development roadmap with clear acceptance criteria
+
+This innovative approach allowed seamless handoff from strategic planning (ChatGPT) to tactical implementation (Claude Code), with the TODO.md file serving as the bridge between AI tools.
 
 ### Code Quality Assurance
 - AI-assisted code review and optimization
