@@ -10,7 +10,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -20,7 +19,10 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
-
+# Ignore all lib folders
+lib/
+# But keep frontend source lib
+!frontend/src/lib/
 # Virtual environments
 .env
 .venv

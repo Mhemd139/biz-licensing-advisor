@@ -112,3 +112,39 @@ def calculate_tightness(rule):
 - **Complete**: All applicable rules are identified
 - **Consistent**: Sorting order is stable and predictable
 - **Guard-Safe**: Special exemption logic prevents contradictory requirements
+
+## Implementation Details
+
+### Key Functions
+
+#### `match_rules(profile, rules)`
+Main entry point that:
+1. Filters all rules against profile
+2. Applies special guard logic
+3. Sorts results by priority/tightness/authority
+4. Returns final matched rule list
+
+#### `rule_matches(profile, rule)`
+Core matching logic:
+- Checks numeric bounds (area, seats)
+- Validates boolean flag requirements
+- Returns True if ALL conditions match
+
+#### `calculate_tightness(rule)`
+Prioritization helper:
+- Sums range sizes for area/seats triggers
+- Lower values indicate more specific rules
+- Used for consistent sort ordering
+
+### Performance
+- **Complexity**: O(n log n) where n = total rules
+- **Typical Runtime**: <100ms for 17 rules
+- **Memory Usage**: Minimal (rules loaded once)
+
+### Testing
+Covered scenarios in `/backend/tests/test_matching.py`:
+1. Small restaurant (no alcohol, basic requirements)
+2. Large steakhouse (alcohol + gas, full Police requirements)
+3. Medium cafe (selective triggers)
+4. Exemption edge cases (≤200 seats, no alcohol)
+5. Boundary conditions (exact threshold matches)

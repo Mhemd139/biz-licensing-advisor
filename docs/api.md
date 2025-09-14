@@ -137,6 +137,18 @@ The `/assess` endpoint integrates with OpenAI GPT-3.5-turbo to generate intellig
 - **Temperature**: 0.3
 - **Validation**: Reports are validated to only reference provided rule IDs
 
+## Environment Variables
+Required for deployment:
+```bash
+OPENAI_API_KEY=sk-proj-your-key-here
+PORT=8000  # Auto-detected by hosting platforms
+```
+
+## Production Deployment
+Backend configured for:
+- **Render**: Root directory `backend`, start command `python main.py`
+- **Railway**: Auto-detection with environment variables
+
 ## Development
 ```bash
 # Start development server

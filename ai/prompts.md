@@ -314,3 +314,8 @@ whats the next milestone steps
 ```
 okay lets start , any steps that requires launching backend or frontend , or even interference from me , u ask me to do it ,like running npm run dev , I will do that , lets continue to the next step
 ```
+
+### Prompt : Continue with Documentation Updates
+```
+yes please , make the necessary modifications and updates
+```

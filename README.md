@@ -42,6 +42,21 @@ Create `.env` file in project root:
 OPENAI_API_KEY=sk-proj-your-key-here
 ```
 
+## 🌐 Live Demo
+- **Backend**: [Deploy to Render/Railway]
+- **Frontend**: [Deploy to Vercel/Netlify]
+
+## 📸 Screenshots
+
+### Questionnaire Interface
+![Business Questionnaire](screenshots/questionnaire.png)
+
+### Generated Report
+![Licensing Report](screenshots/report.png)
+
+### API Documentation
+![Swagger/FastAPI Docs](screenshots/swagger.png)
+
 ### 5. Access Application
 - **Frontend**: http://localhost:5173
 - **Backend API**: http://localhost:8000
@@ -149,22 +164,15 @@ biz-licensing-advisor/
 
 ## 🎯 Features
 
-### Current (M0-M3) ✅
+### Completed Features ✅
 - ✅ Rule matching engine with 17 Israeli licensing requirements
 - ✅ AI-powered report generation using GPT-3.5-turbo
 - ✅ RESTful API with FastAPI
+- ✅ React frontend with business questionnaire
+- ✅ Report display interface with PDF export
 - ✅ Comprehensive test suite
 - ✅ Complete technical documentation
-
-### In Progress (M4)
-- 🔄 React frontend with business questionnaire
-- 🔄 Report display interface
-- 🔄 PDF export functionality
-
-### Future (M5)
-- 📋 Production deployment
-- 📋 Screenshots for submission
-- 📋 Final repository organization
+- ✅ Production-ready deployment configuration
 
 ## ⚡ Performance
 
