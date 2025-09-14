@@ -140,17 +140,14 @@ def _generate_mock_report(profile: Dict[str, Any], matched_rules: List[Dict[str,
     
     # Generate recommendations
     recommendations = [
-        "Contact relevant authorities early in the planning process",
-        "פנו לרשויות הרלוונטיות בשלב מוקדם של התכנון",
-        "Ensure all high-priority requirements are addressed first",
-        "וודאו שכל הדרישות בעדיפות גבוהה מטופלות ראשונות"
+        "Contact relevant authorities early in the planning process\nפנו לרשויות הרלוונטיות בשלב מוקדם של התכנון",
+        "Ensure all high-priority requirements are addressed first\nוודאו שכל הדרישות בעדיפות גבוהה מטופלות ראשונות"
     ]
-    
+
     if high_priority_count > 0:
-        recommendations.extend([
-            f"Focus immediate attention on {high_priority_count} high-priority requirements",
-            f"התמקדו בתשומת לב מיידית ב-{high_priority_count} דרישות בעדיפות גבוהה"
-        ])
+        recommendations.append(
+            f"Focus immediate attention on {high_priority_count} high-priority requirements\nהתמקדו בתשומת לב מיידית ב-{high_priority_count} דרישות בעדיפות גבוהה"
+        )
     
     # Generate summary
     summary = f"""Business Profile Assessment Summary / סיכום הערכת פרופיל עסקי
@@ -441,10 +438,10 @@ def _extract_recommendations(llm_output: str) -> List[str]:
     if not recommendations:
         # Default recommendations
         recommendations = [
-            "Contact relevant authorities early in the planning process",
-            "Prioritize high-priority requirements first", 
-            "Ensure all documentation is prepared before submission",
-            "Consider professional licensing consultation for complex requirements"
+            "Contact relevant authorities early in the planning process\nפנו לרשויות הרלוונטיות בשלב מוקדם של התכנון",
+            "Prioritize high-priority requirements first\nתעדוף דרישות עדיפות גבוהה קודם",
+            "Ensure all documentation is prepared before submission\nוודאו שכל התיעוד מוכן לפני הגשה",
+            "Consider professional licensing consultation for complex requirements\nשקול ייעוץ מקצועי לרישוי עבור דרישות מורכבות"
         ]
     
     return recommendations

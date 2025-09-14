@@ -115,14 +115,18 @@ export default function NextActions({ report, matches, requirementsIndex }: Next
                 {index + 1}
               </div>
               <div className="flex-1 bg-gray-50 rounded-lg px-4 py-3">
-                <p className="text-gray-800 text-sm leading-relaxed">
-                  {action.text}
+                <div className="text-gray-800 text-sm leading-relaxed">
+                  {action.text.split('\n').map((line, lineIndex) => (
+                    <p key={lineIndex} className={lineIndex > 0 ? 'mt-1 text-gray-600' : ''}>
+                      {line}
+                    </p>
+                  ))}
                   {action.ruleIds.length > 0 && (
                     <span className="block mt-2 text-xs text-gray-500">
                       Related rules: {action.ruleIds.map(id => `(${id})`).join(', ')}
                     </span>
                   )}
-                </p>
+                </div>
               </div>
             </div>
           ))}
