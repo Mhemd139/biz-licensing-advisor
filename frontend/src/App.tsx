@@ -7,7 +7,6 @@ import NextActions from './components/NextActions';
 import CitationsTable from './components/CitationsTable';
 import Toast from './components/Toast';
 import { assess, getRequirements, Profile, AssessmentResult, Rule } from './lib/api';
-import { mockAssessmentResult, mockRequirements } from './lib/mock';
 
 interface AppState {
   profile: Profile;
@@ -47,13 +46,8 @@ function App() {
         console.log('CCTV rule details:', index['R-Police-CCTV-Signage']);
         setState(prev => ({ ...prev, requirementsIndex: index }));
       } catch (error) {
-        console.log('Requirements API failed, using mock data');
-        // Use mock data if API fails
-        const index = mockRequirements.reduce((acc, rule) => {
-          acc[rule.id] = rule;
-          return acc;
-        }, {} as Record<string, Rule>);
-        setState(prev => ({ ...prev, requirementsIndex: index }));
+        console.error('Failed to load requirements:', error);
+        setState(prev => ({ ...prev, error: 'Failed to load requirements' }));
       }
     };
 
@@ -64,19 +58,6 @@ function App() {
     setState(prev => ({ ...prev, loading: true, error: undefined }));
 
     try {
-      // Check for mock mode
-      if (import.meta.env.VITE_MOCK === '1') {
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setState(prev => ({
-          ...prev,
-          loading: false,
-          result: mockAssessmentResult,
-          showToast: true
-        }));
-        return;
-      }
-
       const result = await assess(profile);
 
       // Debug logging
@@ -128,9 +109,7 @@ function App() {
       setState(prev => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Assessment failed',
-        result: mockAssessmentResult, // Fallback to mock
-        showToast: true
+        error: error instanceof Error ? error.message : 'Assessment failed'
       }));
     }
   };
