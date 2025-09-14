@@ -14,8 +14,12 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 
 app = FastAPI()
 
-# Allow FE port 5173
-origins = ["http://localhost:5173"]
+# Allow FE origins
+origins = [
+    "http://localhost:5173",
+    "https://biz-licensing-advisor.vercel.app",
+    "https://biz-licensing-advisor.netlify.app"
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -91,4 +95,5 @@ def assess_business(profile: BusinessProfile):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

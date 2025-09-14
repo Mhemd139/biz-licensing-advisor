@@ -304,3 +304,13 @@ In Next 7 Days, tag items with rule IDs (e.g., "(R-MoH-Food-Temps)") for traceab
 ```
 give me a commit message make it simple and clear
 ```
+
+### Prompt : Next Milestone Steps
+```
+whats the next milestone steps
+```
+
+### Prompt : Start M5 Deployment
+```
+okay lets start , any steps that requires launching backend or frontend , or even interference from me , u ask me to do it ,like running npm run dev , I will do that , lets continue to the next step
+```
